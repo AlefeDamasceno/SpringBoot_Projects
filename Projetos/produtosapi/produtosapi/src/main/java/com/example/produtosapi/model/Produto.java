@@ -1,9 +1,22 @@
 package com.example.produtosapi.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Produto {
+    @Id
+    @Column
     private String id;
+
+    @Column
     private String nome;
+
+    @Column
     private String descricao;
+
+    @Column
     private double preco;
 
     public String getId() {
@@ -41,7 +54,7 @@ public class Produto {
     @Override
     public String toString() {
         return "Produto{" +
-                "id='" + id + '\'' +
+                "id='" + getId() + '\'' +
                 ", nome='" + nome + '\'' +
                 ", descricao='" + descricao + '\'' +
                 ", preco=" + preco +
