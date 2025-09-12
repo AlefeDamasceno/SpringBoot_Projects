@@ -4,6 +4,7 @@ import com.example.produtosapi.model.Produto;
 import com.example.produtosapi.repository.ProdutoRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -32,8 +33,14 @@ public class ProdutoController {
         return produtoRepository.findById(id).orElse(null);
     }
 
+    @GetMapping
+    public List<Produto> buscar(@RequestParam ("nome") String nome){
+        return produtoRepository.findByNome(nome);
+    }
+
     @DeleteMapping("/{id}")
     public void deletarPorId(@PathVariable("id") String id){
         produtoRepository.deleteById(id);
     }
+
 }
