@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class ProdutoController {
 
-    private ProdutoRepository produtoRepository;
+    private final ProdutoRepository produtoRepository;
 
     public ProdutoController(ProdutoRepository produtoRepository) {
         this.produtoRepository = produtoRepository;
@@ -29,18 +29,27 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    public Produto buscarPorId(@PathVariable("id") String id){
+    public Produto buscarPorId(@PathVariable ("id") String id){
         return produtoRepository.findById(id).orElse(null);
     }
 
-    @GetMapping
-    public List<Produto> buscar(@RequestParam ("nome") String nome){
+    @GetMapping("/nome/{nome}")
+    public List<Produto> buscarPorNome(@PathVariable ("nome") String nome){
         return produtoRepository.findByNome(nome);
     }
 
     @DeleteMapping("/{id}")
-    public void deletarPorId(@PathVariable("id") String id){
+    public void deletar(@PathVariable ("id") String id){
         produtoRepository.deleteById(id);
     }
 
+    @PutMapping("/{id}")
+    public Produto atualizar(@PathVariable ("id") String id,
+                          @RequestBody Produto produto){
+        if (buscarPorId(id) != null){
+            produto.setId(id);
+            return produtoRepository.save(produto);
+        }
+        return null;
+    }
 }
